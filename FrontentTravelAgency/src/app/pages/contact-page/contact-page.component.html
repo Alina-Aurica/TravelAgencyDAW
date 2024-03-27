@@ -1,0 +1,70 @@
+<mat-toolbar class="custom-toolbar" color="primary">
+  <span class="example-spacer"></span>
+  <div *ngIf="logOutVisible; else authVisible">
+    <mat-icon class="example-icon">account_circle</mat-icon>
+    <a mat-button (click)="logOut()">LogOut</a>
+  </div>
+  <ng-template #authVisible>
+    <mat-icon class="example-icon">account_circle</mat-icon>
+    <a mat-button routerLink="/logInPage">LogIn</a>
+    <mat-icon class="example-icon">perm_identity</mat-icon>
+    <a mat-button routerLink="/registerPage">Register</a>
+  </ng-template>
+</mat-toolbar>
+
+<mat-toolbar class="grey-toolbar">
+  <!--  <mat-toolbar-row>-->
+  <mat-icon class="example-icon custom-icon">map</mat-icon>
+  <span style="font-size: x-large; font-family: 'Comic Sans MS', serif">DreamTravel</span>
+  <span class="example-spacer"></span>
+  <a mat-button class="custom-button" routerLink="/homePage">Home</a>
+  <a mat-button class="custom-button" [matMenuTriggerFor]="menu">Destinations</a>
+  <div class="custom-menu">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/destinationsPage">View Destinations</button>
+      <a href="destinationsPage/#offers" style="text-decoration: none;"><button mat-menu-item>Offers</button></a>
+    </mat-menu>
+  </div>
+  <a mat-button class="custom-button" routerLink="/contactPage">Contact</a>
+  <div *ngIf="agentVisible">
+    <a mat-button class="custom-button" routerLink="/agentPage">Agent</a>
+  </div>
+  <!--  </mat-toolbar-row>-->
+</mat-toolbar>
+
+<div>
+  <div class="banner">
+    <div class="banner-content">
+        <h1>Contact Us Here</h1>
+        <div class="contact-form">
+          <form (ngSubmit)="onSubmit()">
+            <input class="form-control mb-sm-3" type="text" placeholder="Your Name" [(ngModel)]="contact.name" name="name" required>
+            <input class="form-control mb-sm-3" type="email" placeholder="Your Email" [(ngModel)]="contact.email" name="email" required>
+            <input class="form-control mb-sm-3" placeholder="Message..." [(ngModel)]="contact.message" name="message" required>
+          </form>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Send</button>
+        </div>
+        <div class="contact-info">
+
+          <p>
+            <mat-icon class="example-icon">home</mat-icon>
+            <i class="fas fa-map-marker-alt"></i> 123 Street, New York, USA
+          </p>
+          <p>
+            <mat-icon class="example-icon">mail</mat-icon>
+            <i class="fas fa-envelope"></i> staff&#64;dreamTravel.com
+          </p>
+          <p>
+            <mat-icon class="example-icon">phone</mat-icon>
+            <i class="fas fa-phone"></i> +012 345 67890
+          </p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container-fluid">
+    <span>© DreamTravel</span>
+  </div>
+</div>

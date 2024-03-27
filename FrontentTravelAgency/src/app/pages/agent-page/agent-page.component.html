@@ -1,0 +1,97 @@
+<mat-toolbar class="custom-toolbar" color="primary">
+  <span class="example-spacer"></span>
+  <mat-icon class="example-icon">account_circle</mat-icon>
+  <a mat-button (click)="logOut()">LogOut</a>
+</mat-toolbar>
+
+<mat-toolbar class="grey-toolbar">
+  <!--  <mat-toolbar-row>-->
+  <mat-icon class="example-icon custom-icon">map</mat-icon>
+  <span style="font-size: x-large; font-family: 'Comic Sans MS', serif">DreamTravel</span>
+  <span class="example-spacer"></span>
+  <a mat-button class="custom-button" routerLink="/homePage">Home</a>
+  <a mat-button class="custom-button" [matMenuTriggerFor]="menu">Destinations</a>
+  <div class="custom-menu">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/destinationsPage">View Destinations</button>
+      <a href="destinationsPage/#offers" style="text-decoration: none;"><button mat-menu-item>Offers</button></a>
+    </mat-menu>
+  </div>
+  <a mat-button class="custom-button" routerLink="/contactPage">Contact</a>
+  <!--  </mat-toolbar-row>-->
+</mat-toolbar>
+
+<div class="banner">
+  <div class="banner-content">
+    <h2 id="destinations">Destinations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Number Of Rooms</th>
+          <th>Number Of Seats Available</th>
+          <th>Number Of Seats Total</th>
+          <th>Price</th>
+          <th>Offer</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td><input type="text" [(ngModel)]="destination.name"></td>
+          <td><input type="text" [(ngModel)]="destination.description"></td>
+          <td><input type="text" [(ngModel)]="destination.location"></td>
+          <td><input type="text" [(ngModel)]="destination.numberOfRooms"></td>
+          <td><input type="text" [(ngModel)]="destination.numberOfSeatsAvailable"></td>
+          <td><input type="text" [(ngModel)]="destination.numberOfSeatsTotal"></td>
+          <td><input type="text" [(ngModel)]="destination.price"></td>
+          <td><input type="text" [(ngModel)]="destination.offer"></td>
+          <td><button class="btn btn-secondary" (click)="addDestination()">Add Destination</button></td>
+        </tr>
+        <tr *ngFor="let destinationAux of destinations">
+          <ng-container *ngIf="destinationAux.editable; else viewMode">
+            <td>{{destinationAux.id}}</td>
+            <td><input type="text" [(ngModel)]="destinationAux.name"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.description"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.location"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.numberOfRooms"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.numberOfSeatsAvailable"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.numberOfSeatsTotal"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.price"></td>
+            <td><input type="text" [(ngModel)]="destinationAux.offer"></td>
+            <td>
+              <button class="btn btn-secondary" (click)="updateDestination(destinationAux)">Update Destination</button>
+            </td>
+          </ng-container>
+          <ng-template #viewMode>
+            <td>{{destinationAux.id}}</td>
+            <td>{{destinationAux.name}}</td>
+            <td>{{destinationAux.description}}</td>
+            <td>{{destinationAux.location}}</td>
+            <td>{{destinationAux.numberOfRooms}}</td>
+            <td>{{destinationAux.numberOfSeatsAvailable}}</td>
+            <td>{{destinationAux.numberOfSeatsTotal}}</td>
+            <td>{{destinationAux.price}}</td>
+            <td>{{destinationAux.offer}}</td>
+            <td>
+              <button class="btn btn-secondary" (click)="setEditable(destinationAux)">Activate Edit Mode</button>
+              <button class="btn btn-secondary" (click)="deleteDestination(destinationAux.id)">Delete Destination</button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container-fluid">
+    <span>© DreamTravel</span>
+  </div>
+</div>
+
+

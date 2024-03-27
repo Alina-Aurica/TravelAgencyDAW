@@ -1,0 +1,52 @@
+<mat-toolbar class="custom-toolbar" color="primary">
+  <span class="example-spacer"></span>
+  <mat-icon class="example-icon">perm_identity</mat-icon>
+  <a mat-button routerLink="/registerPage">Register</a>
+</mat-toolbar>
+
+<mat-toolbar class="grey-toolbar">
+  <!--  <mat-toolbar-row>-->
+  <mat-icon class="example-icon custom-icon">map</mat-icon>
+  <span style="font-size: x-large; font-family: 'Comic Sans MS', serif">DreamTravel</span>
+  <span class="example-spacer"></span>
+
+  <a mat-button class="custom-button" routerLink="/homePage">Home</a>
+  <a mat-button class="custom-button" [matMenuTriggerFor]="menu">Destinations</a>
+  <div class="custom-menu">
+    <mat-menu #menu="matMenu">
+      <a href="/destinationsPage" style="text-decoration: none;"><button mat-menu-item>View Destinations</button></a>
+      <a href="destinationsPage/#offers" style="text-decoration: none;"><button mat-menu-item>Offers</button></a>
+    </mat-menu>
+  </div>
+  <a mat-button class="custom-button" routerLink="/contactPage">Contact</a>
+  <!--  </mat-toolbar-row>-->
+</mat-toolbar>
+
+<div>
+  <div class="banner">
+    <div class="banner-content">
+      <h1>Log In Here</h1>
+      <div>
+        <form class="contact-form" (ngSubmit)="logIn()">
+          <input class="form-control mb-sm-3" type="email" placeholder="Your Email" [(ngModel)]="user.email" name="email" [email]="true" #prmEmail="ngModel" required>
+          <div class="block-field">
+            <a class="custom-validator" *ngIf="prmEmail.errors?.['email']">Email address is not valid.</a>
+            <a class="custom-validator" *ngIf="prmEmail.errors?.['required']">Null email.</a>
+          </div>
+          <input class="form-control mb-sm-3" type="password" placeholder="Your Password" [(ngModel)]="user.password" name="password" #nullPassword="ngModel" required>
+          <div class="block-field">
+            <a class="custom-validator" *ngIf="nullPassword.errors?.['required']">Null password.</a>
+          </div>
+        </form>
+        <button type="button" class="custom-button-style" (click)="logIn()">LogIn</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container-fluid">
+    <span>© DreamTravel</span>
+  </div>
+</div>
+

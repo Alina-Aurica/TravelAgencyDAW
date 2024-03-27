@@ -1,0 +1,117 @@
+<mat-toolbar class="custom-toolbar" color="primary">
+  <span class="example-spacer"></span>
+  <div *ngIf="logOutVisible; else authVisible">
+    <mat-icon class="example-icon">account_circle</mat-icon>
+    <a mat-button (click)="logOut()">LogOut</a>
+  </div>
+  <ng-template #authVisible>
+    <mat-icon class="example-icon">account_circle</mat-icon>
+    <a mat-button routerLink="/logInPage">LogIn</a>
+    <mat-icon class="example-icon">perm_identity</mat-icon>
+    <a mat-button routerLink="/registerPage">Register</a>
+  </ng-template>
+</mat-toolbar>
+
+<mat-toolbar class="grey-toolbar">
+  <!--  <mat-toolbar-row>-->
+  <mat-icon class="example-icon custom-icon">map</mat-icon>
+  <span style="font-size: x-large; font-family: 'Comic Sans MS', serif">DreamTravel</span>
+  <span class="example-spacer"></span>
+
+  <!-- Cel mai probabil aici se va modifica -->
+  <div class="card-header">
+    <form (ngSubmit)="searchLocation()">
+      <div class=".mb-sm-3">
+        <input class="custom-search-bar" type="text" [(ngModel)]="destinationLocation" id="location" name="location" placeholder=" Search location...">
+        <button type="button" class="btn btn-primary" (click)="searchLocation()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <a mat-button class="custom-button" routerLink="/homePage">Home</a>
+  <a mat-button class="custom-button" [matMenuTriggerFor]="menu">Destinations</a>
+  <div class="custom-menu">
+    <mat-menu #menu="matMenu">
+<!--      <a href="destinationsPage/#destinations" style="text-decoration: none;"><button mat-menu-item>View Destinations</button></a>-->
+<!--      <a href="destinationsPage/#offers" style="text-decoration: none;"><button mat-menu-item>Offers</button></a>-->
+      <button mat-menu-item (click)="scrollToDestinations()">View Destinations</button>
+      <button mat-menu-item (click)="scrollToOffers()">Offers</button>
+    </mat-menu>
+  </div>
+  <a mat-button class="custom-button" routerLink="/contactPage">Contact</a>
+  <div *ngIf="agentVisible">
+    <a mat-button class="custom-button" routerLink="/agentPage">Agent</a>
+  </div>
+  <!--  </mat-toolbar-row>-->
+</mat-toolbar>
+
+<div class="banner">
+  <div class="banner-content">
+    <h1>Chose your period for travel</h1>
+    <div>
+      <mat-form-field>
+<!--        <mat-label>Enter a date range</mat-label>-->
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div>
+      <button type="button" class="btn btn-secondary" (click)="seeAvailableDestinations()">See the available destinations</button>
+    </div>
+  </div>
+</div>
+
+<!-- Destinations div -->
+<h2 #destinationSection id="destinations" style="margin-top: 5%">Destinations</h2>
+<div class="flex-content">
+  <button type="button" class="btn btn-secondary" (click)="removeFilter()">Remove filter</button>
+</div>
+<div class="card-body">
+  <div *ngFor="let destination of destinations">
+    <div class="card">
+      <img class="card-img-top" [src]="destination.image" alt="Hotel Image">
+      <div class="text-body">
+        <p class="card-text dest-color" style="font-weight: bold;">{{ destination.name }}</p>
+        <p class="card-text address-color">{{ destination.location }}</p>
+        <p class="card-text another-info-color">Rooms: {{ destination.numberOfRooms }}</p>
+        <p class="card-text another-info-color">Available Seats: {{ destination.numberOfSeatsAvailable}}/{{ destination.numberOfSeatsTotal }}</p>
+        <p class="card-text another-info-color">Price: {{ destination.price }}$/night</p>
+        <p class="card-text another-info-color">{{ destination.description }}</p>
+        <div *ngIf="clientVisible">
+          <button type="button" class="btn btn-secondary" (click)="addReservation(destination.id)">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Offers div-->
+<h2 #offerSection id="offers" style="margin-top: 5%">Offers</h2>
+<div class="card-body">
+  <div *ngFor="let destination of destinationsOffer">
+    <div class="card">
+      <img class="card-img-top" [src]="destination.image" alt="Hotel Image">
+      <div class="text-body">
+        <p class="card-text dest-color" style="font-weight: bold;">{{ destination.name }}</p>
+        <p class="card-text address-color">{{ destination.location }}</p>
+        <p class="card-text another-info-color">Price: {{ destination.price | number:'1.2-2'}}$/night</p>
+        <p class="card-text another-info-color" style="color: darkgoldenrod">{{ destination.offer | number:'1.2-2' }}% discount</p>
+        <div *ngIf="clientVisible">
+          <button type="button" class="btn btn-secondary" (click)="addReservation(destination.id)">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container-fluid">
+    <span>© DreamTravel</span>
+  </div>
+</div>
