@@ -1,7 +1,7 @@
 from application.dto.userDTO import UserDTO
-from application.model.role import Role
 from application.model.models import User
 from application.repository.userRepository import UserRepository
+from werkzeug.security import generate_password_hash
 
 
 class UserService:
@@ -10,9 +10,10 @@ class UserService:
         user_DTO = UserDTO()
         user_data = user_DTO.load(data)
 
+        hashed_password = generate_password_hash(user_data.get('password'))
         user_new = User(name=user_data.get('name'),
                         email=user_data.get('email'),
-                        password=user_data.get('password'),
+                        password=hashed_password,
                         role=user_data.get('role')
                         )
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
-
 from application.service.userService import UserService
+from werkzeug.security import check_password_hash
 
 auth_controller = Blueprint('auth_controller', __name__, url_prefix='/auth')
 
@@ -17,8 +17,15 @@ def login():
     if not password:
         return jsonify({'message': 'Missing password'}), 400
 
-    user = UserService.get_user_by_email_and_password(email, password)
-    if user:
+    # user = UserService.get_user_by_email_and_password(email, password)
+    # if user:
+    #     return jsonify(user.repr()), 200
+    # else:
+    #     return jsonify({'message': 'Invalid email or password'}), 400
+
+    user = UserService.get_user_by_email(email)
+
+    if user and check_password_hash(user.password, password):
         return jsonify(user.repr()), 200
     else:
         return jsonify({'message': 'Invalid email or password'}), 400
