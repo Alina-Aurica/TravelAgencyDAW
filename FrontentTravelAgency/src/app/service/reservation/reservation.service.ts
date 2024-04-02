@@ -21,10 +21,22 @@ export class ReservationService {
     return this.httpClient.get<Reservation>(this.baseURL + "/getReservationByID/" + id, {headers: header})
   }
 
-  getAllReservation(){
+  getAllReservations(){
     let header = new HttpHeaders()
       .set('Content-Type', 'application/json')
     return this.httpClient.get<Reservation[]>(this.baseURL + "/allReservations", {headers: header})
+  }
+
+  getAllReservationsByDestinationID(destinationId: any) {
+    let header = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    return this.httpClient.get<Reservation[]>(this.baseURL + "/allReservationsByDestinationId/" + destinationId, {headers: header})
+  }
+
+  getAllReservationsByDestinationIDYearCountPerMonths(destinationId: any, year: any){
+    let header = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+    return this.httpClient.get<Array<any>>(this.baseURL + "/allReservationsByDestinationIdAndYearCountPerMonths/" + destinationId + "/" + year, {headers: header})
   }
 
   addReservation(id_user: any, id_destination: any, start_date: any, end_date: any): any {

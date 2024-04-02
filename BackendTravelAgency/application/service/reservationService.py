@@ -55,3 +55,7 @@ class ReservationService:
         reservations = ReservationRepository.find_all_reservations()
         return [reservation.repr() for reservation in reservations]
 
+    # trebuie modificata
+    @staticmethod
+    def get_all_reservations_by_destination_id_and_year_count_per_months(destination_id, year):
+        return ReservationRepository.find_all_reservations_by_id_destination_and_year_for_start_date_count_per_months(destination_id, year)

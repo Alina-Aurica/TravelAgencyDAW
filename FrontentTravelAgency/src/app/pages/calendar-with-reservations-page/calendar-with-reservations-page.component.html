@@ -1,0 +1,21 @@
+<h2>Reservations Calendar</h2>
+
+<div class="month-year-selector">
+  <select [(ngModel)]="selectedMonth" (ngModelChange)="onMonthOrYearChange()">
+    <option *ngFor="let month of months; let i = index" [ngValue]="i">{{ month }}</option>
+  </select>
+
+  <select [(ngModel)]="selectedYear" (ngModelChange)="onMonthOrYearChange()">
+    <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+  </select>
+</div>
+
+<mat-dialog-content class="calendar-container">
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="events">
+  </mwl-calendar-month-view>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

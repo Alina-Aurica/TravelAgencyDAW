@@ -6,6 +6,11 @@ import {ContactPageComponent} from "./pages/contact-page/contact-page.component"
 import {LogInPageComponent} from "./pages/log-in-page/log-in-page.component";
 import {RegisterPageComponent} from "./pages/register-page/register-page.component";
 import {AgentPageComponent} from "./pages/agent-page/agent-page.component";
+import {GuardsService} from "./authorization/auth/guards.service";
+import {GuardsAdminService} from "./authorization/authAdmin/guards-admin.service";
+import {
+  GraphicWithReservationsPageComponent
+} from "./pages/graphic-with-reservations-page/graphic-with-reservations-page.component";
 
 export const routes: Routes = [
   {path: "homePage", component:HomePageComponent},
@@ -13,7 +18,7 @@ export const routes: Routes = [
   {path: "contactPage", component:ContactPageComponent},
   {path: "logInPage", component:LogInPageComponent},
   {path: "registerPage", component:RegisterPageComponent},
-  {path: "agentPage", component:AgentPageComponent}
+  {path: "agentPage", component:AgentPageComponent, canActivate: [GuardsService, GuardsAdminService]}
 ];
 
 @NgModule({

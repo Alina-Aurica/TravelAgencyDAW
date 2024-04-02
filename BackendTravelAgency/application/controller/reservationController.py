@@ -40,3 +40,19 @@ def get_all_reservations():
 def get_all_reservations_by_destination_id(destination_id):
     reservations = ReservationService.get_all_reservations_by_destination_id(destination_id)
     return jsonify(reservations), 200
+
+
+@reservation_controller.route('/allReservationsByDestinationIdAndYearCountPerMonths/<int:destination_id>/<string:year>',
+                              methods=['GET'])
+def get_all_reservations_by_destination_id_and_year_count_per_months(destination_id, year):
+    if destination_id is None or year is None:
+        return jsonify({"error": "Missing destination_id or year parameter"}), 400
+
+    count_per_months = ReservationService.get_all_reservations_by_destination_id_and_year_count_per_months(
+        destination_id, year)
+    count_per_months_list = [
+        {'month': month, 'count': count}
+        for month, count in count_per_months
+    ]
+
+    return jsonify(count_per_months_list), 200

@@ -23,6 +23,13 @@ import {DestinationService} from "../../service/destination/destination.service"
 import {UserService} from "../../service/user/user.service";
 import {ReservationService} from "../../service/reservation/reservation.service";
 import {endWith} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  CalendarWithReservationsPageComponent
+} from "../calendar-with-reservations-page/calendar-with-reservations-page.component";
+import {
+  GraphicWithReservationsPageComponent
+} from "../graphic-with-reservations-page/graphic-with-reservations-page.component";
 
 @Component({
   selector: 'app-destionations-page',
@@ -74,10 +81,14 @@ export class DestinationsPageComponent implements OnInit {
     end: new FormControl<Date | null>(null),
   });
   userId: any;
+  years: number[] = this.generateYearRange(new Date().getFullYear() - 5, new Date().getFullYear() + 5);
+  selectedYear: number = new Date().getFullYear();
+  yearAux: number = new Date().getFullYear();
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
     private destinationService: DestinationService,
     private userService: UserService,
     private reservationService: ReservationService
@@ -127,6 +138,12 @@ export class DestinationsPageComponent implements OnInit {
       if(userRole === "CLIENT")
         this.clientVisible = true;
     }
+
+    this.range.valueChanges.subscribe(val => {
+      if (val.start && val.end) {
+        this.seeAvailableDestinations();
+      }
+    });
   }
 
   searchLocation() {
@@ -185,6 +202,51 @@ export class DestinationsPageComponent implements OnInit {
         console.log("Nu avem email!")
       }
     );
+  }
+
+  statisticsReservation(destinationID: any) {
+    console.log(this.yearAux)
+    this.reservationService.getAllReservationsByDestinationIDYearCountPerMonths(destinationID, this.yearAux).subscribe(
+        (result: Array<any>) => {
+          console.log(result)
+          this.dialog.open(GraphicWithReservationsPageComponent, {
+            width: '700px',
+            height: 'auto',
+            data: {result}
+          })
+        },
+        (error: Error) => {
+          console.error(error)
+        }
+    )
+  }
+
+  generateYearRange(start: number, end: number): number[] {
+    const years = [];
+    for (let year = start; year <= end; year++) {
+      years.push(year);
+    }
+    return years;
+  }
+
+  onYearChange(): void {
+    console.log(`Suntem aici`);
+    this.yearAux = this.selectedYear;
+  }
+
+  seeReservations(destinationID: any) {
+    this.reservationService.getAllReservationsByDestinationID(destinationID).subscribe(
+      (reservationsResult: any) => {
+        this.dialog.open(CalendarWithReservationsPageComponent, {
+          width: '700px',
+          height: 'auto',
+          data: {reservationsResult}
+        })
+      },
+      (error: Error) => {
+        console.error(error)
+      }
+    )
   }
 
   seeAvailableDestinations(){

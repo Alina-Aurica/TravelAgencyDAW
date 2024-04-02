@@ -61,9 +61,9 @@
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
-    <div>
-      <button type="button" class="btn btn-secondary" (click)="seeAvailableDestinations()">See the available destinations</button>
-    </div>
+<!--    <div>-->
+<!--      <button type="button" class="btn btn-secondary" (click)="seeAvailableDestinations()">See the available destinations</button>-->
+<!--    </div>-->
   </div>
 </div>
 
@@ -83,8 +83,17 @@
         <p class="card-text another-info-color">Available Seats: {{ destination.numberOfSeatsAvailable}}/{{ destination.numberOfSeatsTotal }}</p>
         <p class="card-text another-info-color">Price: {{ destination.price }}$/night</p>
         <p class="card-text another-info-color">{{ destination.description }}</p>
+        <div>
+          <select class="display-year" id="yearSelect" [(ngModel)]="selectedYear" (ngModelChange)="onYearChange()">
+            <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+          </select>
+          <button type="button" class="btn btn-secondary" (click)="statisticsReservation(destination.id)">See Statistics</button>
+        </div>
         <div *ngIf="clientVisible">
           <button type="button" class="btn btn-secondary" (click)="addReservation(destination.id)">Book Now</button>
+        </div>
+        <div *ngIf="agentVisible">
+          <button type="button" class="btn btn-secondary" (click)="seeReservations(destination.id)">See Reservations</button>
         </div>
       </div>
     </div>
@@ -102,8 +111,17 @@
         <p class="card-text address-color">{{ destination.location }}</p>
         <p class="card-text another-info-color">Price: {{ destination.price | number:'1.2-2'}}$/night</p>
         <p class="card-text another-info-color" style="color: darkgoldenrod">{{ destination.offer | number:'1.2-2' }}% discount</p>
+        <div>
+          <select class="display-year" id="yearSelect2" [(ngModel)]="selectedYear" (ngModelChange)="onYearChange()">
+            <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+          </select>
+          <button type="button" class="btn btn-secondary" (click)="statisticsReservation(destination.id)">See Statistics</button>
+        </div>
         <div *ngIf="clientVisible">
           <button type="button" class="btn btn-secondary" (click)="addReservation(destination.id)">Book Now</button>
+        </div>
+        <div *ngIf="agentVisible">
+          <button type="button" class="btn btn-secondary" (click)="seeReservations(destination.id)">See Reservations</button>
         </div>
       </div>
     </div>

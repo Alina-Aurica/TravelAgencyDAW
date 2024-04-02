@@ -1,0 +1,20 @@
+h2 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: royalblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}

@@ -1,0 +1,16 @@
+<h2>Statistics about this destination</h2>
+
+<div>
+    <div class="chart-container">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [type]="barChartType">
+        </canvas>
+    </div>
+</div>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
